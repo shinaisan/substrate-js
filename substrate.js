@@ -3,7 +3,10 @@ function substrate() {
   var img = document.getElementById("color-source");
 
   function setup() {
+    // variation: 0 => original
+    // variation: 1 => 45 degrees branch
     var ctx = {
+      variation: 0,
       dimx: 400,
       dimy: 400,
       num: 0,
@@ -166,6 +169,10 @@ function substrate() {
     var t = 0;
 
     function findStart() {
+      findStartFuncs[ctx.variation]();
+    }
+
+    function findStart_0() {
       // Pick a random point
       var px = 0;
       var py = 0;
@@ -175,7 +182,7 @@ function substrate() {
       var dimx = ctx.dimx;
       var dimy = ctx.dimy;
       var cgrid = ctx.cgrid;
-      // The original condition is ((!found) || (timeout++ > 1000)) ... 
+      // The original condition is ((!found) || (timeout++ > 1000)) ...
       while ((!found) && (timeout++ < ctx.dimx * ctx.dimy)) {
         px = Math.floor(Math.random() * ctx.dimx);
         py = Math.floor(Math.random() * ctx.dimy);
@@ -195,6 +202,43 @@ function substrate() {
       }
       return found;
     }
+
+    function findStart_1() {
+      // Pick a random point
+      var px = 0;
+      var py = 0;
+      // Shift until crack is found
+      var found = false;
+      var timeout = 0;
+      var dimx = ctx.dimx;
+      var dimy = ctx.dimy;
+      var cgrid = ctx.cgrid;
+      // The original condition is ((!found) || (timeout++ > 1000)) ...
+      while ((!found) && (timeout++ < ctx.dimx * ctx.dimy)) {
+        px = Math.floor(Math.random() * ctx.dimx);
+        py = Math.floor(Math.random() * ctx.dimy);
+        if (cgrid[py * dimx + px] < 10000) {
+          found = true;
+        }
+      }
+      if (found) {
+        // Start crack
+        var a = cgrid[py * dimx + px];
+        if (Math.random() < 0.5) {
+          a -= 0 + Math.floor(Math.random() * 45);
+        } else {
+          a += 0 + Math.floor(Math.random() * 45);
+        }
+        startCrack(px, py, a);
+      }
+      return found;
+    }
+
+    // Variations
+    var findStartFuncs = [
+      findStart_0,
+      findStart_1
+    ];
 
     function startCrack(X, Y, T) {
       x = X;
