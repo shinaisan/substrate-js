@@ -15,3 +15,15 @@ If a crack reaches the canvas border or touches another crack, a new crack perpe
 - `index.html`: HTML file to display rendering.
 - `substrate.js`: My JavaScript port of the algorithm.
 
+## Variation 1
+
+I made a derivative work that simply change the branch angle from 90 degrees to about 45 degrees.
+
+![45](https://raw.githubusercontent.com/shinaisan/substrate-js/master/45.JPG)
+
+## Variation 2
+
+In this variation, cracks slightly change their angle of moving direction along the way.
+
+![ROUND](https://raw.githubusercontent.com/shinaisan/substrate-js/master/ROUND.JPG)
+
