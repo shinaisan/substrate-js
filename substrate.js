@@ -8,7 +8,6 @@ function substrate() {
       dimy: 400,
       num: 0,
       maxnum: 30,
-      numpal: 0,
       maxpal: 4,
       backgroundColor: "#ffffff",
       stop: false
@@ -24,9 +23,6 @@ function substrate() {
     takecolor(ctx);
 
     background(ctx);
-
-    ctx.cgrid = Array(ctx.dimx * ctx.dimy).fill(0);
-    ctx.cracks = Array(ctx.maxnum).fill(0).map(function() {newCrack(ctx);});
 
     begin(ctx);
 
@@ -119,33 +115,32 @@ function substrate() {
         }
       }
     }
-    ctx.numpal = goodcolor.length;
   }
 
   function draw(ctx) {
     if (ctx.stop) return;
     var cracks = ctx.cracks;
-    var num = ctx.num;
+    var num = cracks.length;
     for (var n = 0; n < num; n++) {
       cracks[n].move();
     }
   }
 
   function makeCrack(ctx) {
-    var num = ctx.num;
     var maxnum = ctx.maxnum;
     var cracks = ctx.cracks;
+    var num = cracks.length;
     if (num < maxnum) {
       // Make a new crack instance
-      cracks[num] = newCrack(ctx);
-      num++;
+      cracks.push(newCrack(ctx));
     }
-    ctx.num = num;
   }
 
   function begin(ctx) {
     var dimx = ctx.dimx;
     var dimy = ctx.dimy;
+    ctx.cgrid = Array(ctx.dimx * ctx.dimy).fill(0);
+    ctx.cracks = [];
     var cgrid = ctx.cgrid;
     // Erase crack grid
     for (var y = 0; y < dimy; y++) {
@@ -159,7 +154,6 @@ function substrate() {
       cgrid[i] = Math.floor(360 * Math.random());
     }
     // Make just three cracks
-    ctx.num = 0;
     for (var k = 0; k < 3; k++) {
       makeCrack(ctx);
     }
