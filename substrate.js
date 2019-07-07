@@ -6,7 +6,7 @@ function substrate() {
     // variation: 0 => original
     // variation: 1 => 45 degrees branch
     var ctx = {
-      variation: 0,
+      variation: 2,
       dimx: 400,
       dimy: 400,
       num: 0,
@@ -237,7 +237,8 @@ function substrate() {
     // Variations
     var findStartFuncs = [
       findStart_0,
-      findStart_1
+      findStart_1,
+      findStart_0
     ];
 
     function startCrack(X, Y, T) {
@@ -252,6 +253,13 @@ function substrate() {
       var dimx = ctx.dimx;
       var dimy = ctx.dimy;
       var cgrid = ctx.cgrid;
+      if (ctx.variation == 2) {
+        if (Math.random() < 0.2) {
+          t += -1 + Math.floor(2 * Math.random());
+          t += 360;
+          t %= 360;
+        }
+      }
       // Continue cracking
       x += 0.42 * Math.cos(t * Math.PI / 180);
       y += 0.42 * Math.sin(t * Math.PI / 180);
