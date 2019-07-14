@@ -9,7 +9,6 @@ function substrate() {
       variation: 2,
       dimx: 400,
       dimy: 400,
-      num: 0,
       maxnum: 30,
       maxpal: 4,
       backgroundColor: "#ffffff",
